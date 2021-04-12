@@ -84,7 +84,7 @@ class CompanyController extends Controller
         ->join('countries', 'company.country', '=', 'countries.id')
         ->join('states', 'company.state', '=', 'states.id')
         ->select('company.id','company.uid','company.company_name','company.customFile','company.company_email','company.company_number','countries.name as country','states.name as state','company.city','company.company_address','company.company_postcode')
-        
+        ->where('company.id',$id)
         ->first();
         return view('admin.company_view',['company' => $company]);
     }
