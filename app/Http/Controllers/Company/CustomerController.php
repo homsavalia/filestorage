@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Customer;
+namespace App\Http\Controllers\Company;
 use App\Http\Controllers\Controller; 
 use Illuminate\Http\Request;
 use App\Models\customer;
 use App\Models\User;
 use DB;
+
 class CustomerController extends Controller
 {
     public function index(){
@@ -15,7 +16,7 @@ class CustomerController extends Controller
     public function customer_store(Request $request){
         
         $request->validate([
-            'cid'=>'required',
+            
             'customer_name'=>'required',
             'customer_email'=>'required',
             'customer_address'=>'required',
@@ -29,7 +30,7 @@ class CustomerController extends Controller
         $u_id = $last->id += 1;
     
         $customer = new customer([
-            'cid'=>$request->get('cid'),
+            'cid'=>Auth::user()->id,
             'uid'=>$u_id,
             'customer_name'=>$request->get('customer_name'),
             'customer_email'=>$request->get('customer_email'),
@@ -85,7 +86,6 @@ class CustomerController extends Controller
         
         $customer = Customer::find($id);
          
-        $customer->cid = $request->get('cid');
         $customer->customer_name = $request->get('customer_name');
         $customer->customer_email = $request->get('customer_email');
         $customer->customer_number = $request->get('customer_number');
@@ -96,7 +96,6 @@ class CustomerController extends Controller
         $customer->customer_postcode = $request->get('customer_postcode');
          
         $customer->update([
-            'cid'=>$request['cid'],
             'customer_name'=>$request['customer_name'],
             'customer_email'=> $request['customer_email'],
             'customer_number'=>$request['customer_number'],
@@ -111,4 +110,5 @@ class CustomerController extends Controller
         $customer->save();
         return back()->with(['msg', 'inserted']);
     }
+    
 }

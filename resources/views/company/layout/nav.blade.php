@@ -36,9 +36,9 @@
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
                 <li class=" nav-item"><a class="d-flex align-items-center" href="app-email.html"><i data-feather="mail"></i><span class="menu-title text-truncate" data-i18n="Email">Dashboard</span></a>
                 </li>
-                <!-- <li class=" nav-item"><a class="d-flex align-items-center" href="{{ url('customer-add') }}"><i data-feather="mail"></i><span class="menu-title text-truncate" data-i18n="Email">Customer</span></a>
-                </li> -->
                 <li class=" nav-item"><a class="d-flex align-items-center" href="{{ url('display-list') }}"><i data-feather="mail"></i><span class="menu-title text-truncate" data-i18n="Email">Customer</span></a>
+                </li>
+                <li class=" nav-item"><a class="d-flex align-items-center" href="{{ url('company-customerid') }}"><i data-feather="mail"></i><span class="menu-title text-truncate" data-i18n="Email">File Uploade</span></a>
                 </li>
             </ul>
         </div>

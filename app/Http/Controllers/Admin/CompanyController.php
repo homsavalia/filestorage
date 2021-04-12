@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Company;
+namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller; 
 use App\Models\company;
+use App\Models\file_uploade;
 use App\Models\User;
 use Illuminate\Http\Request;
 use DB;
-
+use Auth;
 class CompanyController extends Controller
 {
     public function index(){
@@ -144,5 +145,31 @@ class CompanyController extends Controller
         $company->save();
         return back()->with(['msg', 'inserted']);
     }
+    public function company_customerid( ){
+        $customer_id = Auth::user()->id;
+         $customer = DB::table('customer')->where('cid', $customer_id)->where('is_delete', '0')->get();
+        return view('company.file_uploade',['customer' => $customer]);
+    }
+    public function company_fileuploade(Request $request,file_uploade $file_uploade){
+        if($request->hasFile('file_name')) {
 
+            $images = $request->file('file_name');
+            foreach($images as $image){
+                $filename = $image->getClientOriginalName();
+                $extension = $image->getClientOriginalExtension();
+                
+            }
+        $file_uploade = new file_uploade([
+            $customer_id = Auth::user()->id,
+            // print_r($customer_id),
+            // exit(),
+            'cid'=>$customer_id,
+            'uid'=>$request->get('uid'),
+            'file_name'=>$filename
+        ]);
+        $file_uploade->save();
+        
+        return back()->with(['msg', 'inserted']);
+    }
    }
+}

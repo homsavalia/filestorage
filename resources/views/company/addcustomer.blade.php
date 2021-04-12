@@ -39,10 +39,6 @@
                      <form id="jquery-val-form" method="post"  action="{{url('customer-store')}}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                           <label class="form-label" for="cid">Customer Id *</label>
-                           <input type="number" class="form-control" id="cid" name="cid" placeholder="Enter Customer Id" />
-                        </div>
-                        <div class="form-group">
                            <label class="form-label" for="customer_name">Customer Name *</label>
                            <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="Enter Customer Name" />
                         </div>

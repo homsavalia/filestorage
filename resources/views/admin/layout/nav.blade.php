@@ -39,7 +39,7 @@
                 </li>
                 <!-- <li class=" nav-item"><a class="d-flex align-items-center" href="{{ url('company-add') }}"><i data-feather="mail"></i><span class="menu-title text-truncate" data-i18n="Email">Company</span></a>
                 </li> -->
-                <li class=" nav-item"><a class="d-flex align-items-center" href="{{ url('display-list') }}"><i data-feather="mail"></i><span class="menu-title text-truncate" data-i18n="Email">Company</span></a>
+                <li class=" nav-item"><a class="d-flex align-items-center" href="{{ url('company-list') }}"><i data-feather="mail"></i><span class="menu-title text-truncate" data-i18n="Email">Company</span></a>
                 </li>
             </ul>
         </div>
