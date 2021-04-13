@@ -170,6 +170,20 @@ class CompanyController extends Controller
         $file_uploade->save();
         
         return back()->with(['msg', 'inserted']);
+
+        /* 
+        if($request->hasfile('file_name'))
+        {
+            foreach($request->file('file_name') as $file)
+            {
+                $name = time().'.'.$file->extension();
+                //$file->move(public_path().'/files/', $name);  
+                $data[] = $name;  
+            }
+        }
+        print_r($data);
+        
+        */
     }
    }
 }
