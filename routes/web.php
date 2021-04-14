@@ -36,7 +36,7 @@ Route::get('/customer-view/{id}', 'Company\CustomerController@customer_view');
 Route::get('/customer-delete/{id}', 'Company\CustomerController@customer_delete');
 Route::get('/customer-edit/{id}', 'Company\CustomerController@customer_edit');
 Route::put('/customer-update/{id}', 'Company\CustomerController@customer_update');
-
+Route::get('/file-downlode', 'Company\CustomerController@file_downlode');
 //country
 Route::get('countries', 'CountryController@countries');
 Route::get('states/{id}', 'CountryController@states');

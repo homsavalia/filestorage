@@ -76,6 +76,13 @@
                      <p>Read full documnetation <a href="https://datatables.net/" target="_blank">here</a></p>
                   </div>
                </div>
+
+               @if(session()->has('msg'))
+                     <div class="alert alert-success">
+                     {{ session()->get('msg') }}
+                     </div>
+                     @endif
+                     
                <!-- Basic table -->
                <section id="basic-datatable">
                   <div class="row">

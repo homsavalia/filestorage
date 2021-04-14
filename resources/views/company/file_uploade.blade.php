@@ -16,12 +16,16 @@
                   <div class="card-header">
                      <!-- <h4 class="card-title">Add Customer</h4> -->
                   </div>
+                  @if(session()->has('msg'))
+                     <div class="alert alert-success">
+                     {{ session()->get('msg') }}
+                     </div>
+                     @endif
                   <div class="card-body">
                     
                      <form id="jquery-val-form" method="post"  action="{{ url('company-fileuploade') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                        
                            <label for="uid">Customer Name</label>
                            <select class="form-control select2 state" id="uid" name="uid">
                            <option value="">Customer Name</option>

@@ -5,7 +5,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\customer;
 use App\Models\User;
+use App\Models\file_uploade;
 use DB;
+use Auth;
+use Illuminate\Support\Facades\Storage;
+use File;
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Crypt;
 
 class CustomerController extends Controller
 {
@@ -51,7 +57,11 @@ class CustomerController extends Controller
         
         
         $User->save();
-         return back()->with(['msg', 'inserted']);
+        
+        $path = public_path().'/files/'.$u_id;
+        File::makeDirectory($path,$mode = 0777, true, true);
+
+        return redirect()->back()->with('msg', 'Customer Inserted successfully');
     }
     public function customer_list(customer $customer){
         $customer = Customer::all()->where('is_delete','0');;
@@ -72,7 +82,7 @@ class CustomerController extends Controller
         $UpdateDetails = DB::table('customer')
               ->where('id', $id)
               ->update(['is_delete' => 1]);
-              return back();
+              return redirect()->back()->with('msg', 'Customer Deleted successfully');
     }
 
     public function customer_edit(customer $customer,$id)
@@ -108,7 +118,21 @@ class CustomerController extends Controller
         ]);
     
         $customer->save();
-        return back()->with(['msg', 'inserted']);
+        return redirect()->back()->with('msg', 'Customer Updated successfully');
     }
+    public function file_downlode()
+    {
+        $customer =Auth::user()->id;
+
+        $file_uploade = file_uploade::all();
+        //  $file_uploade = DB::table('file_uploade')->select('file_name')->first();
+        //  $decrypted = Crypt::decryptString($file_uploade);
+        //   print_r($decrypted);
+        //   exit();
+
+        
+        return view('customer.file_downlode',['file_uploade' => $file_uploade]);
+    }
+    
     
 }

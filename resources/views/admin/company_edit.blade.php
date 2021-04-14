@@ -28,6 +28,13 @@
                               {{ $error }}
                            </div>
                            @endforeach
+
+                     @if(session()->has('msg'))
+                     <div class="alert alert-success">
+                     {{ session()->get('msg') }}
+                     </div>
+                     @endif
+
                         </ul>
                      </div>
                      @endif

@@ -152,7 +152,7 @@
                                        <td>{{ $company->city }}</td>
                                        <td>{{ $company->company_address }}</td>
                                        <td>{{ $company->company_postcode }}</td>
-                                       <td><a class="btn btn-primary" href="{{ url('display-list') }}">Back</a></td>
+                                       <td><a class="btn btn-primary" href="{{ url('company-list') }}">Back</a></td>
                                     </tr>
                                  </tbody>
                               </table>

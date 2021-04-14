@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
+use Illuminate\Support\Facades\Crypt;
+
 class CompanyController extends Controller
 {
     public function index(){
@@ -63,7 +65,7 @@ class CompanyController extends Controller
         ]);
         $User->save();
         
-        return back()->with(['msg', 'inserted']);
+        return redirect()->back()->with('msg', 'Company Inserted successfully');
 
     }
 
@@ -77,7 +79,7 @@ class CompanyController extends Controller
         $UpdateDetails = DB::table('company')
               ->where('id', $id)
               ->update(['is_delete' => 1]);
-              return back();
+              return redirect()->back()->with('msg', 'Company Deleted successfully');
     }
 
     public function company_view(Company $company,$id){//company_view
@@ -143,7 +145,7 @@ class CompanyController extends Controller
         ]);
     
         $company->save();
-        return back()->with(['msg', 'inserted']);
+        return redirect()->back()->with('msg', 'Company Updated successfully');
     }
     public function company_customerid( ){
         $customer_id = Auth::user()->id;
@@ -151,39 +153,34 @@ class CompanyController extends Controller
         return view('company.file_uploade',['customer' => $customer]);
     }
     public function company_fileuploade(Request $request,file_uploade $file_uploade){
-        if($request->hasFile('file_name')) {
+        $last = DB::table('customer')->where('id',$request->get('uid'))->first();
+        $u_id = $last->uid ;
+            if($request->hasfile('file_name'))
+                    {
+                        foreach($request->file('file_name') as $file)
+                        {
+                            $name = $file->getClientOriginalName();
+                            $name=strtolower($name);
+                           // $encrypted =Crypt::encryptString($name);
+                            
+                            $str = str_replace(array( '\'', '"',
+                            ',' , ';', '<', '>','-',' '), '_', $str);
+                            $file->move(public_path().'/files/'.$u_id, $str);  
 
-            $images = $request->file('file_name');
-            foreach($images as $image){
-                $filename = $image->getClientOriginalName();
-                $extension = $image->getClientOriginalExtension();
-                
-            }
-        $file_uploade = new file_uploade([
-            $customer_id = Auth::user()->id,
-            // print_r($customer_id),
-            // exit(),
-            'cid'=>$customer_id,
-            'uid'=>$request->get('uid'),
-            'file_name'=>$filename
-        ]);
-        $file_uploade->save();
-        
-        return back()->with(['msg', 'inserted']);
+                            
+                            // print_r($decrypt);
+                            // exit();
 
-        /* 
-        if($request->hasfile('file_name'))
-        {
-            foreach($request->file('file_name') as $file)
-            {
-                $name = time().'.'.$file->extension();
-                //$file->move(public_path().'/files/', $name);  
-                $data[] = $name;  
-            }
-        }
-        print_r($data);
-        
-        */
-    }
+                            $file_uploade = new file_uploade([
+                                'cid'=> Auth::user()->id,
+                                'uid'=> $request->get('uid'),
+                                'file_name'=>$str,
+                            ]);
+                            $file_uploade->save();
+                        }
+                    }
+                    
+         return redirect()->back()->with('msg', 'File Uploade successfully');
+                   
    }
 }

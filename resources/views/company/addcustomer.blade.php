@@ -36,6 +36,13 @@
                         {{ session()->get('error') }}  
                      </div>
                      @endif
+                     
+                     @if(session()->has('msg'))
+                     <div class="alert alert-success">
+                     {{ session()->get('msg') }}
+                     </div>
+                     @endif
+
                      <form id="jquery-val-form" method="post"  action="{{url('customer-store')}}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
