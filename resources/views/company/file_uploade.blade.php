@@ -21,6 +21,13 @@
                      {{ session()->get('msg') }}
                      </div>
                      @endif
+
+                     @if(session()->has('error'))
+                     <div class="alert alert-danger">
+                     {{ session()->get('error') }}
+                     </div>
+                     @endif
+
                   <div class="card-body">
                     
                      <form id="jquery-val-form" method="post"  action="{{ url('company-fileuploade') }}" enctype="multipart/form-data">
@@ -50,7 +57,15 @@
                      </form>
                   </div>
                </div>
-  
+               <!-- -----  -->
+               <div class="d-flex justify-content-between mb-50">
+                  <h3>File Storage</h3>
+               </div>
+               <h5>{{$last}} GB of 15 GB used </h5>
+               <div class="progress progress-bar-primary progress-md mb-0" style="height: 10px">
+                  <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="70" aria-valuemax="100" style="width:{{$last}}%"></div>
+               </div>
+                <!-- --------- -->
          </div>
        </section>
     </div>

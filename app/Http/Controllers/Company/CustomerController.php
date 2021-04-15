@@ -125,6 +125,8 @@ class CustomerController extends Controller
         $customer =Auth::user()->id;
 
         $file_uploade = file_uploade::all();
+        
+
         //  $file_uploade = DB::table('file_uploade')->select('file_name')->first();
         //  $decrypted = Crypt::decryptString($file_uploade);
         //   print_r($decrypted);

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use DB;
 use Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
 {
@@ -147,40 +148,58 @@ class CompanyController extends Controller
         $company->save();
         return redirect()->back()->with('msg', 'Company Updated successfully');
     }
-    public function company_customerid( ){
+    public function company_customerid(){
         $customer_id = Auth::user()->id;
-         $customer = DB::table('customer')->where('cid', $customer_id)->where('is_delete', '0')->get();
-        return view('company.file_uploade',['customer' => $customer]);
+        $customer = DB::table('customer')->where('cid', $customer_id)->where('is_delete', '0')->get(); 
+        
+        $last = DB::table('file_uploade')->sum('file_size'); 
+            $last=$last/1024;
+            $last=(int)$last;
+
+        return view('company.file_uploade',compact('customer','last'));
     }
+
+
     public function company_fileuploade(Request $request,file_uploade $file_uploade){
+
         $last = DB::table('customer')->where('id',$request->get('uid'))->first();
         $u_id = $last->uid ;
+
             if($request->hasfile('file_name'))
                     {
                         foreach($request->file('file_name') as $file)
                         {
+                            $size = $file->getSize();
+                            
                             $name = $file->getClientOriginalName();
                             $name=strtolower($name);
                            // $encrypted =Crypt::encryptString($name);
                             
                             $str = str_replace(array( '\'', '"',
-                            ',' , ';', '<', '>','-',' '), '_', $str);
-                            $file->move(public_path().'/files/'.$u_id, $str);  
+                            ',' , ';', '<', '>','-',' '), '_', $name);
+                            $file->move(public_path().'/files/'.$u_id, $str); 
 
+                            $last = DB::table('file_uploade')->sum('file_size'); 
+                             $kb=$size/1024;
+                             
+                             if($kb>150){
+                                return redirect()->back()->with('error', 'your file size is to long');               
+                             }
+                             else{
                             
-                            // print_r($decrypt);
-                            // exit();
-
-                            $file_uploade = new file_uploade([
+                                 $file_uploade = new file_uploade([
                                 'cid'=> Auth::user()->id,
                                 'uid'=> $request->get('uid'),
                                 'file_name'=>$str,
+                                'file_size'=>$size,
                             ]);
-                            $file_uploade->save();
+                                 
+                              $file_uploade->save();   
+                                 }
+                            
                         }
+                        
                     }
-                    
-         return redirect()->back()->with('msg', 'File Uploade successfully');
-                   
+         return redirect()->back()->with('msg', 'File Uploade successfully');               
    }
 }

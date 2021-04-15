@@ -10,6 +10,6 @@ class file_uploade extends Model
     
     protected $table = 'file_uploade';
     protected $fillable=[
-        'cid','uid','file_name'
+        'cid','uid','file_name','file_size'
     ];
 }
