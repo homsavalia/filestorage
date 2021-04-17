@@ -138,8 +138,8 @@
                                        <th class="control sorting_disabled" rowspan="1" colspan="1" style="width: 23px; display: none;" aria-label=""></th>
                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 20px;" aria-label="Name: activate to sort column ascending">No</th>
                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 50px;" aria-label="Name: activate to sort column ascending">Customer Name</th>
-                                       <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 60px;" aria-label="Email: activate to sort column ascending">Customer Email</th>
-                                       <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 118px;" aria-label="Actions">Actions</th>
+                                       <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 50px;" aria-label="Email: activate to sort column ascending">Customer Email</th>
+                                       <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 118px;text-align: center;" aria-label="Actions">Actions</th>
                                     </tr>
                                  </thead>
                                  <?php $no=1; ?>
@@ -151,7 +151,8 @@
                                        <td>{{ $customers->customer_email }}</td>
                                        <td><a class="btn btn-secondary"  href="{{ url('customer-view',$customers->id) }}">View</a>
                                        <a class="btn btn-danger" href="{{ url('customer-delete',$customers->id) }}">Delete</a>
-                                       <a class="btn btn-primary" href="{{ url('customer-edit',$customers->id) }}">Edit</a></td>
+                                       <a class="btn btn-primary" href="{{ url('customer-edit',$customers->id) }}">Edit</a>
+                                       <a class="btn btn-info" href="{{ url('customer-viewfile',$customers->id) }}">View File</a></td>
                                        @endforeach
                                     </tr>
                                  </tbody>

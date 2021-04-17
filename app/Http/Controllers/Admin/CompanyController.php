@@ -152,18 +152,22 @@ class CompanyController extends Controller
         $customer_id = Auth::user()->id;
         $customer = DB::table('customer')->where('cid', $customer_id)->where('is_delete', '0')->get(); 
         
-        $last = DB::table('file_uploade')->sum('file_size'); 
+        // $last = DB::table('file_uploade')->sum('file_size'); 
+        //     $last=$last/1024;
+        //     $last=(int)$last;
+            $last = DB::table('file_uploade')->where('cid',$customer_id)->sum('file_size');
             $last=$last/1024;
             $last=(int)$last;
-
+            
+            
         return view('company.file_uploade',compact('customer','last'));
     }
 
-
-    public function company_fileuploade(Request $request,file_uploade $file_uploade){
+    public function company_fileuploade(Request $request){
 
         $last = DB::table('customer')->where('id',$request->get('uid'))->first();
         $u_id = $last->uid ;
+        
 
             if($request->hasfile('file_name'))
                     {
@@ -172,17 +176,20 @@ class CompanyController extends Controller
                             $size = $file->getSize();
                             
                             $name = $file->getClientOriginalName();
+                            $extension = $file->getClientOriginalExtension();
+                            
                             $name=strtolower($name);
-                           // $encrypted =Crypt::encryptString($name);
                             
                             $str = str_replace(array( '\'', '"',
                             ',' , ';', '<', '>','-',' '), '_', $name);
                             $file->move(public_path().'/files/'.$u_id, $str); 
 
-                            $last = DB::table('file_uploade')->sum('file_size'); 
+                            $last = DB::table('file_uploade')->where('cid',Auth::user()->id)->sum('file_size'); 
                              $kb=$size/1024;
+
+                             $file_size  = DB::table('customer')->where('cid',Auth::user()->id)->sum('file_size');
                              
-                             if($kb>150){
+                             if($kb>$file_size){
                                 return redirect()->back()->with('error', 'your file size is to long');               
                              }
                              else{

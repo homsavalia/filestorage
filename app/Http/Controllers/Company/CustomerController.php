@@ -120,21 +120,26 @@ class CustomerController extends Controller
         $customer->save();
         return redirect()->back()->with('msg', 'Customer Updated successfully');
     }
-    public function file_downlode()
+    public function view_file()
     {
-        $customer =Auth::user()->id;
+        $file = DB::table('file_uploade')
+        ->join('customer', 'file_uploade.uid', '=', 'customer.id')
+        ->select('file_uploade.file_name','file_uploade.uid as fileuploade_uid','file_uploade.id','file_uploade.file_size','customer.uid as customer_uid')
+        ->where('customer.uid',Auth::user()->id)
+        ->get();
 
-        $file_uploade = file_uploade::all();
-        
-
-        //  $file_uploade = DB::table('file_uploade')->select('file_name')->first();
-        //  $decrypted = Crypt::decryptString($file_uploade);
-        //   print_r($decrypted);
-        //   exit();
-
-        
-        return view('customer.file_downlode',['file_uploade' => $file_uploade]);
+        return view('customer.file_downlode',compact('file'));
     }
-    
-    
+    public function customer_viewfile(Request $request,file $file,$id)
+    {   
+        $file = DB::table('file_uploade')
+        ->join('customer', 'file_uploade.uid', '=', 'customer.id')
+        ->select('file_uploade.file_name','file_uploade.uid','file_uploade.id','file_uploade.file_size','customer.uid')
+        ->where('file_uploade.uid',$id)
+        ->get();
+        print_r($file);
+        exit();
+                            
+        return view('company.customer_fileview',compact('file'));
+    }
 }
