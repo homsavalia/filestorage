@@ -34,7 +34,6 @@
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                
                 <li class=" nav-item"><a class="d-flex align-items-center" href="app-email.html"><i data-feather="mail"></i><span class="menu-title text-truncate" data-i18n="Email">Dashboard</span></a>
                 </li>
                 <!-- <li class=" nav-item"><a class="d-flex align-items-center" href="{{ url('company-add') }}"><i data-feather="mail"></i><span class="menu-title text-truncate" data-i18n="Email">Company</span></a>

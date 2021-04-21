@@ -73,6 +73,7 @@ class CustomerController extends Controller
         ->join('states', 'customer.state', '=', 'states.id')
         ->select('customer.id','customer.uid','customer.customer_name','customer.customer_email',
         'customer.customer_number','countries.name as country','states.name as state','customer.city','customer.customer_address','customer.customer_postcode')
+        ->where('customer.id',$id)
         ->first();
         
         return view('company.customer_view', ['customer' => $customer]);
@@ -137,8 +138,7 @@ class CustomerController extends Controller
         ->select('file_uploade.file_name','file_uploade.uid','file_uploade.id','file_uploade.file_size','customer.uid')
         ->where('file_uploade.uid',$id)
         ->get();
-        print_r($file);
-        exit();
+        
                             
         return view('company.customer_fileview',compact('file'));
     }

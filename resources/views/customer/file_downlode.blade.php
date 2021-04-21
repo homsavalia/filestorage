@@ -1,5 +1,5 @@
 @extends('customer.layout.base')
-@section('title', 'File View')
+@section('title', 'Display File')
 @section('content')
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
@@ -127,7 +127,7 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="content-wrapper">
-                                                <p class="card-text file-name mb-0" style="text-align:center;">
+                                                <p class="card-text file-name mb-0">
                                                 <a href="{{asset('files')}}/{{$name->customer_uid}}/{{$name->file_name}}" download="{{$name->file_name}}">
                                                 {{ucwords(str_replace('_',' ',$name->file_name))}}
                                                 </a>

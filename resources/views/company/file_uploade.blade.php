@@ -1,5 +1,5 @@
 @extends('company.layout.base')
-@section('title', 'Add Customer')
+@section('title', 'Add File')
 @section('content')
 <div class="app-content content ">
 <div class="content-overlay"></div>

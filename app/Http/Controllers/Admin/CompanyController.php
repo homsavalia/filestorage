@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use DB;
 use Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
@@ -84,12 +85,30 @@ class CompanyController extends Controller
     }
 
     public function company_view(Company $company,$id){//company_view
-        $company = DB::table('company')
+        // $company = DB::table('company')
+        // ->join('countries', 'company.country', '=', 'countries.id')
+        // ->join('states', 'company.state', '=', 'states.id')
+        // ->select('company.id','company.uid','company.company_name','company.customFile','company.company_email','company.company_number','countries.name as country','states.name as state','company.city','company.company_address','company.company_postcode')
+        // ->where('company.id',$id)
+        // ->first();
+        
+        $company=DB::table('company')
+        ->join('file_uploade','company.uid','=','file_uploade.cid')
         ->join('countries', 'company.country', '=', 'countries.id')
         ->join('states', 'company.state', '=', 'states.id')
-        ->select('company.id','company.uid','company.company_name','company.customFile','company.company_email','company.company_number','countries.name as country','states.name as state','company.city','company.company_address','company.company_postcode')
+        ->select('company.id','company.uid','company.company_name','company.customFile','company.company_email','company.company_number','countries.name as country','states.name as state','company.city','company.company_address','company.company_postcode','file_uploade.file_name')
+        ->where('company.id',$id)
         ->first();
-        return view('admin.company_view',['company' => $company]);
+
+        $last = DB::table('file_uploade')
+        ->join('company','company.uid','=','file_uploade.cid')
+        ->where('company.id',$id)
+        ->sum('file_size');
+        $last=$last/1024;
+        $last=(int)$last;
+    
+
+        return view('admin.company_view',compact('company','last'));
     }
     
     public function company_edit(Company $company,$id)//company_edit
@@ -134,7 +153,6 @@ class CompanyController extends Controller
         }
         $company->update([
             'company_name'=>$request['company_name'],
-            // 'customFile'=>$filename,
             'company_email'=> $request['company_email'],
             'company_number'=>$request['company_number'],
             'country'=>$request['country'],
@@ -176,12 +194,15 @@ class CompanyController extends Controller
                             $size = $file->getSize();
                             
                             $name = $file->getClientOriginalName();
+                            // $decrypted = decrypt($decryptedContent);
                             $extension = $file->getClientOriginalExtension();
                             
                             $name=strtolower($name);
                             
                             $str = str_replace(array( '\'', '"',
                             ',' , ';', '<', '>','-',' '), '_', $name);
+                            // $str=encrypt($str);
+                            // decrypt($str),
                             $file->move(public_path().'/files/'.$u_id, $str); 
 
                             $last = DB::table('file_uploade')->where('cid',Auth::user()->id)->sum('file_size'); 

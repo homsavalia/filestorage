@@ -1,5 +1,5 @@
 @extends('company.layout.base')
-@section('title', 'File List')
+@section('title', 'Display File')
 @section('content')
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">

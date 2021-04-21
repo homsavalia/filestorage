@@ -1,5 +1,5 @@
-@extends('admin.layout.base')
-@section('title', 'Table')
+@extends('company.layout.base')
+@section('title', 'Display Customer')
 @section('content')
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
@@ -55,14 +55,14 @@
                <div class="content-header-left col-md-9 col-12 mb-2">
                   <div class="row breadcrumbs-top">
                      <div class="col-12">
-                        <h2 class="content-header-title float-left mb-0">DataTables</h2>
+                        <h2 class="content-header-title float-left mb-0">Display Customer</h2>
                         <div class="breadcrumb-wrapper">
                            <ol class="breadcrumb">
                               <li class="breadcrumb-item"><a href="index.html">Home</a>
                               </li>
-                              <li class="breadcrumb-item"><a href="#">Datatable</a>
+                              <li class="breadcrumb-item"><a href="{{url('display-list')}}">Display Customer</a>
                               </li>
-                              <li class="breadcrumb-item active">Basic
+                              <li class="breadcrumb-item active">Customer Detail
                               </li>
                            </ol>
                         </div>
@@ -71,11 +71,6 @@
                </div>
             </div>
             <div class="content-body">
-               <div class="row">
-                  <div class="col-12">
-                     <p>Read full documnetation <a href="https://datatables.net/" target="_blank">here</a></p>
-                  </div>
-               </div>
                <!-- Basic table -->
                <section id="basic-datatable">
                   <div class="row">
@@ -84,7 +79,7 @@
                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                               <div class="card-header border-bottom p-1">
                                  <div class="head-label">
-                                    <h6 class="mb-0">DataTable with Buttons</h6>
+                                    <h6 class="mb-0">Display Customer with Buttons</h6>
                                  </div>
                                  <div class="dt-action-buttons text-right">
                                     <div class="dt-buttons d-inline-flex">
